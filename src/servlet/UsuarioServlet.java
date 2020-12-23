@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-
 import javax.xml.bind.DatatypeConverter;
 
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -142,6 +141,8 @@ public class UsuarioServlet extends HttpServlet {
 			String cidade = request.getParameter("cidade");
 			String uf = request.getParameter("uf");
 			String ibge = request.getParameter("ibge");
+			String sexo = request.getParameter("sexo");
+			String perfil = request.getParameter("perfil");
 
 			Usuario usuario = new Usuario();
 			usuario.setId(!id.isEmpty() ? Long.parseLong(id) : null);
@@ -154,6 +155,15 @@ public class UsuarioServlet extends HttpServlet {
 			usuario.setCidade(cidade);
 			usuario.setUf(uf);
 			usuario.setIbge(ibge);
+			usuario.setSexo(sexo);
+			usuario.setPerfil(perfil);
+			
+			if(request.getParameter("ativo") != null
+					&& (request.getParameter("ativo").equalsIgnoreCase("on") || request.getParameter("ativo").equalsIgnoreCase("true"))){
+				usuario.setAtivo(true);
+			} else {
+				usuario.setAtivo(false);
+			}
 			
 			try {
 				
@@ -196,9 +206,6 @@ public class UsuarioServlet extends HttpServlet {
 						
 					}else {
 						usuario.setAtualizarImage(false);
-//						usuario.setFotoBase64(request.getParameter("fotoTemp"));
-//						usuario.setContentType(request.getParameter("contentTypeTemp"));
-//						usuario.setFotoBase64Miniatura(request.getParameter("fotoBase64Miniatura"));
 					}
 					
 					/* Processa PDF */
@@ -210,8 +217,6 @@ public class UsuarioServlet extends HttpServlet {
 						usuario.setContentTypeCurriculo(curriculoPdf.getContentType());							
 					}else {
 						usuario.setAtualizarPdf(false);
-//						usuario.setCurriculoBase64(request.getParameter("curriculoTemp"));
-//						usuario.setContentTypeCurriculo(request.getParameter("contentTypeCurriculoTemp"));
 					}
 				}
 
@@ -231,10 +236,11 @@ public class UsuarioServlet extends HttpServlet {
 				} else if (id == null || id.isEmpty() && !usuarioDao.validarLogin(login)) { // Quando for novo usuário
 					msg = "Usuário já existe com o mesmo Login!";
 					podeInserir = false;
-				} else if (id == null || id.isEmpty() && !usuarioDao.validarSenha(senha)){ // Quando for usuário novo
+				} 
+				/* else if (id == null || id.isEmpty() && !usuarioDao.validarSenha(senha)){ // Quando for usuário novo
 					msg = "\n A Senha já existe para outro usuário!";
 					podeInserir = false;
-				}
+				}*/
 				
 				/* Fim da validação dos campos obrigatórios */
 				if (msg != null) {

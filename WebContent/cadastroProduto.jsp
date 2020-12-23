@@ -103,15 +103,17 @@
 						<td style="width: 5%;">${produto.id }</td>
 						<td style="width: 30%;">${produto.descricao }</td>
 						<td style="width: 30%;"><c:out value="${produto.quantidade }" /></td>
-						<td><fmt:formatNumber type="number" maxFractionDigits="2" value="${produto.valor }"></fmt:formatNumber></td>
-<%-- 						<td style="width: 30%;">${produto.valor }</td> --%>
+						<td>
+							<fmt:formatNumber type="number" maxFractionDigits="2" value="${produto.valor }"></fmt:formatNumber>
+						</td>
 						<td style="width: 5%;">
 							<a href="salvarProduto?acao=editar&produto=${produto.id }" data-bs-toggle="tooltip" title="Editar">
 								<i class="fas fa-edit"></i>
 							</a>
 						</td>
 						<td style="width: 5%;">
-							<a href="salvarProduto?acao=delete&produto=${produto.id }" data-bs-toggle="tooltip" title="Remover">								
+							<a href="salvarProduto?acao=delete&produto=${produto.id }" data-bs-toggle="tooltip" title="Remover"
+								onclick="return confirm('Confirmar a exclusão?');">								
 								<i class="fas fa-trash-alt"></i>
 							</a>
 						</td>

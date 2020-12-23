@@ -95,7 +95,8 @@
 						<td style="width: 30%;">${fone.numero }</td>
 						<td style="width: 30%;">${fone.tipo }</td>
 						<td style="width: 5%%;" class="text-center">
-							<a href="salvarTelefones?user=${fone.usuarioId }&acao=deleteFone&foneId=${fone.id }" data-bs-toggle="tooltip" title="Remover">								
+							<a href="salvarTelefones?user=${fone.usuarioId }&acao=deleteFone&foneId=${fone.id }" 
+								data-bs-toggle="tooltip" title="Remover" onclick="return confirm('Confirmar a exclusão?');">								
 								<i class="fas fa-trash-alt"></i>
 							</a>
 						</td>

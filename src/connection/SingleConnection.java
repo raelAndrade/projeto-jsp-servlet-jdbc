@@ -15,7 +15,7 @@ public class SingleConnection {
 	
 	private static String user = "postgres";
 	
-	private static String password = "";
+	private static String password = "admin";
 	
 	private static Connection connection = null;
 	
@@ -43,7 +43,5 @@ public class SingleConnection {
 	public static Connection getConnection() {
 		return connection;
 	}
-	
-	
-	
+
 }

@@ -38,6 +38,12 @@ public class Usuario {
 	
 	private boolean atualizarPdf = true;
 	
+	private boolean ativo;
+	
+	private String sexo;
+	
+	private String perfil;
+	
 	public Long getId() {
 		return id;
 	}
@@ -177,6 +183,30 @@ public class Usuario {
 	
 	public void setAtualizarPdf(boolean atualizarPdf) {
 		this.atualizarPdf = atualizarPdf;
+	}
+	
+	public boolean isAtivo() {
+		return ativo;
+	}
+	
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
+	
+	public String getSexo() {
+		return sexo;
+	}
+	
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
+	}
+	
+	public String getPerfil() {
+		return perfil;
+	}
+
+	public void setPerfil(String perfil) {
+		this.perfil = perfil;
 	}
 
 	public boolean validarLoginSenha(String login, String senha) {

@@ -11,7 +11,8 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
 	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha512-bnIvzh6FU75ZKxp0GXLH9bewza/OIw6dLVh9ICg0gogclmYGguQJWl8U30WpbsGTqbIiAwxTsbe76DErLq5EDQ==" crossorigin="anonymous"></script>
+<!-- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha512-bnIvzh6FU75ZKxp0GXLH9bewza/OIw6dLVh9ICg0gogclmYGguQJWl8U30WpbsGTqbIiAwxTsbe76DErLq5EDQ==" crossorigin="anonymous"></script> -->
+	<script src="resources/js/jquery.min.js" type="text/javascript"></script>
 </head>
 <body>
 	
@@ -34,7 +35,7 @@
 	
 	<div class="container">
 		
-		<div class="text-center">
+		<div class="text-center mb-5 mt-5">
 			<h1>Cadastro de Usuário</h1>
 			<h4 style="color: red;">${msg }</h4>
 		</div>
@@ -96,14 +97,48 @@
 			<div class="mb-3 row">
 
 				<label for="senha" class="col-sm-1 col-form-label">Estado:</label> 
-				<div class="col-sm-5">
+				<div class="col-sm-3">
 					<input class="form-control" name="uf" type="text" id="uf" size="2" value="${user.uf }" />
 				</div>
 
 				<label for="senha" class="col-sm-1 col-form-label">IBGE:</label> 
-				<div class="col-sm-5">
+				<div class="col-sm-3">
 					<input class="form-control" name="ibge" type="text" id="ibge" size="8" value="${user.ibge }" />
 				</div>
+				
+				<label for="senha" class="col-sm-1 form-check-label">Ativo:</label> 
+				<div class="col-sm-3">
+					<input class="form-check-input" type="checkbox" id="ativo" name="ativo" value="${user.ativo }" 
+						<c:if test="${user.ativo == true}">checked="checked"</c:if> />
+				</div>
+			</div>
+			
+			<div class="mb-3 row">
+				<label for="sexo" class="col-sm-1 col-form-label">Sexo:</label>
+				
+				<div class="col-sm-3">
+					<input class="form-check-input sexo" type="radio" value="feminino" id="feminino" name="sexo" 
+						<c:if test="${user.sexo eq 'feminino' }">checked="checked"</c:if> />
+					<label class="form-check-label" for="feminino">Feminino</label>
+				</div>
+				
+				<div class="col-sm-3">
+					<input class="form-check-input sexo" type="radio" value="masculino" id="masculino" name="sexo" 
+						<c:if test="${user.sexo eq 'masculino' }">checked="checked"</c:if> />
+					<label class="form-check-label" for="masculino">Masculino</label>
+				</div>
+				
+				<label for="perfil" class="col-sm-1 col-form-label">Perfil:</label>
+				<div class="col-sm-3">
+					<select class="form-select" id="perfil" name="perfil" style="width: 355px;">
+						<option value="">-- SELECIONE --</option>
+						<option value="administrador" <c:if test="${user.perfil eq 'administrador' }">selected</c:if>>Administrador</option>
+						<option value="secretario" <c:if test="${user.perfil eq 'secretario' }">selected</c:if>>Secretário</option>
+						<option value="gerente" <c:if test="${user.perfil eq 'gerente' }">selected</c:if>>Gerente</option>
+						<option value="funcionario" <c:if test="${user.perfil eq 'funcionario' }">selected</c:if>>Funcionário</option>
+					</select>
+				</div>
+				
 			</div>
 			
 			<div class="mb-3 row">
@@ -126,6 +161,21 @@
 			</div>
 			
 		</form>
+		
+		<div class="container mt-5">
+			<form action="pesquisaServlet" method="post">
+				<div class="mb-3 row">
+					<label for="descricaoConsulta" class="col-sm-1 col-form-label">Buscar</label>
+					<div class="col-sm-10">
+						<input class="form-control" type="text" id="descricaoConsulta" name="descricaoConsulta" value="" >
+					</div>
+					<div class="col-sm-1">
+						<button type="submit" class="btn btn-success">Consultar</button>
+					</div>
+				</div>
+			</form>
+		
+		</div>
 	
 		<div class="container">
 			<center>
@@ -163,7 +213,8 @@
 								</a>
 							</td>
 							<td>
-								<a href="salvarUsuario?acao=delete&user=${user.id }" data-bs-toggle="tooltip" title="Remover">								
+								<a href="salvarUsuario?acao=delete&user=${user.id }" data-bs-toggle="tooltip" title="Remover" 
+									onclick="return confirm('Confirmar a exclusão?');">								
 									<i class="fas fa-trash-alt"></i>
 								</a>
 							</td>
@@ -190,6 +241,39 @@
 	</div>
 	
 	<script type="text/javascript">
+	
+		$(document).ready(function(){
+			
+			$('#ativo').on("change", function(e){
+				e.preventDefault();
+				
+				if($('#ativo').is(":checked")){
+					$(this).prop('checked', true);
+					$(this).val(true);
+				}else{
+					$(this).prop('checked', false);
+					$(this).val(false);
+				}
+				
+			});
+			
+			$('.sexo').on('change', function(e){
+				e.preventDefault();
+				
+				if($('#feminino').is(':checked')){
+					$('#feminino').attr('checked', true);
+					$('#masculino').attr('checked', false);
+					$('#feminino').val('feminino');
+					$('#masculino').val('');
+				}else if($('#masculino').is(':checked')){
+					$('#masculino').attr('checked', true);
+					$('#feminino').attr('checked', false);
+					$('#masculino').val('masculino');
+					$('#feminino').val('');
+				}
+			});
+			
+		});
 		
 		function validarCampos(){
 			
