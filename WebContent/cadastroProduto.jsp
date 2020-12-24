@@ -76,6 +76,17 @@
 			</div>
 			
 			<div class="mb-3 row">
+				<label for="categoria" class="col-sm-1 col-form-label">Categoria:</label>
+				<div class="col-sm-3">
+					<select class="form-select" id="categoria" name="categoriaId">
+						<c:forEach items="${categorias }" var="categoria">
+							<option value="${categoria.id }" <c:if test="${categoria.id == produto.categoriaId }">selected</c:if>>${categoria.nome }</option>
+						</c:forEach>
+					</select>
+				</div>
+			</div>
+			
+			<div class="mb-3 row">
 				<button type="submit" class="btn btn-primary" style="width: 10%; margin: 0px 5px 0px 895px;">Salvar</button>
 				<button type="submit" class="btn btn-primary" style="width: 10%;" onclick="document.getElementById('formProduto').action = 'salvarProduto?acao=reset'">Cancelar</button>
 			</div>

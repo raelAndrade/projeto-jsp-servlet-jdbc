@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import beans.Usuario;
 import dao.UsuarioDao;
+import model.Usuario;
 
 @WebServlet("/pesquisaServlet")
 public class PesquisaServlet extends HttpServlet {

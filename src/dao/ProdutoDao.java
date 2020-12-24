@@ -7,8 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import beans.Produto;
 import connection.SingleConnection;
+import model.Categoria;
+import model.Produto;
 
 public class ProdutoDao {
 	
@@ -20,11 +21,12 @@ public class ProdutoDao {
 
 	public void salvar(Produto produto) {
 		try {
-			String sql = "insert into produto(descricao, quantidade, valor) values (?, ?, ?)";
+			String sql = "insert into produto(descricao, quantidade, valor, categoria_id) values (?, ?, ?, ?)";
 			PreparedStatement insert = connection.prepareStatement(sql);
 			insert.setString(1, produto.getDescricao());
 			insert.setDouble(2, produto.getQuantidade());
 			insert.setDouble(3, produto.getValor());
+			insert.setLong(4, produto.getCategoriaId());
 			insert.execute();			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -49,10 +51,31 @@ public class ProdutoDao {
 			produto.setDescricao(resultSet.getString("descricao"));
 			produto.setQuantidade(resultSet.getDouble("quantidade"));
 			produto.setValor(resultSet.getDouble("valor"));
+			produto.setCategoriaId(resultSet.getLong("categoria_id"));
 			
 			listar.add(produto);
 		}
 		return listar;
+	}
+	
+	public List<Categoria> listaCategorias() throws Exception{
+		
+		List<Categoria> cat = new ArrayList<Categoria>();
+		
+		String sql = "select * from categoria order by nome desc";
+		
+		PreparedStatement statement = connection.prepareStatement(sql);
+		ResultSet resultSet = statement.executeQuery();
+		
+		while(resultSet.next()) {
+			Categoria categoria = new Categoria();
+			categoria.setId(resultSet.getLong("id"));
+			categoria.setNome(resultSet.getString("nome"));
+			
+			cat.add(categoria);
+		}
+		
+		return cat;
 	}
 	
 	public void delete(String id) {
@@ -85,6 +108,7 @@ public class ProdutoDao {
 			produto.setDescricao(resultSet.getString("descricao"));
 			produto.setQuantidade(resultSet.getDouble("quantidade"));
 			produto.setValor(resultSet.getDouble("valor"));
+			produto.setCategoriaId(resultSet.getLong("categoria_id"));
 			
 			return produto;
 		}
@@ -93,13 +117,15 @@ public class ProdutoDao {
 
 	public void atualizar(Produto produto) {
 		try {
-			String sql = "update produto set descricao = ?, quantidade = ?, valor = ? where id = " + produto.getId();
+			String sql = "update produto set descricao = ?, quantidade = ?, valor = ?, categoria_id = ? where id = " + produto.getId();
 			
-			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setString(1, produto.getDescricao());
-			statement.setDouble(2, produto.getQuantidade());
-			statement.setDouble(3, produto.getValor());
-			statement.executeUpdate();
+			PreparedStatement update = connection.prepareStatement(sql);
+			update.setString(1, produto.getDescricao());
+			update.setDouble(2, produto.getQuantidade());
+			update.setDouble(3, produto.getValor());
+			update.setLong(4, produto.getCategoriaId());
+			
+			update.executeUpdate();
 			
 			connection.commit();
 			

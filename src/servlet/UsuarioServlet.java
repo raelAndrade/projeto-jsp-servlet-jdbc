@@ -22,8 +22,8 @@ import javax.xml.bind.DatatypeConverter;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.tomcat.util.codec.binary.Base64;
 
-import beans.Usuario;
 import dao.UsuarioDao;
+import model.Usuario;
 
 @SuppressWarnings("static-access")
 @WebServlet("/salvarUsuario")

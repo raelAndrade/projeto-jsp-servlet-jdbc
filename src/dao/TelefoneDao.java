@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import beans.Telefone;
 import connection.SingleConnection;
+import model.Telefone;
 
 public class TelefoneDao {
 	

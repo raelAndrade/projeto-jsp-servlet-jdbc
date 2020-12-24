@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import beans.Telefone;
-import beans.Usuario;
 import dao.TelefoneDao;
 import dao.UsuarioDao;
+import model.Telefone;
+import model.Usuario;
 
 @WebServlet("/salvarTelefones")
 public class TelefonesServlet extends HttpServlet {

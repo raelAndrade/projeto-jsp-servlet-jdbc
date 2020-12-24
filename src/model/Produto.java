@@ -1,4 +1,4 @@
-package beans;
+package model;
 
 public class Produto {
 
@@ -9,7 +9,9 @@ public class Produto {
 	private Double quantidade;
 	
 	private Double valor;
-
+	
+	private Long categoriaId;
+	
 	public Long getId() {
 		return id;
 	}
@@ -46,4 +48,11 @@ public class Produto {
 		return Double.toString(valor).replace('.', ',');
 	}
 	
+	public Long getCategoriaId() {
+		return categoriaId;
+	}
+	
+	public void setCategoriaId(Long categoriaId) {
+		this.categoriaId = categoriaId;
+	}
 }

@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import beans.Usuario;
 import connection.SingleConnection;
+import model.Usuario;
 
 public class UsuarioDao {
 	
